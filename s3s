@@ -56,7 +56,7 @@ if $token_mode; then
 elif $new; then
 	pip install -r requirements.txt || echo "Failed to install python modules using requirements.txt"
 	# Do a first run to setup things.
-	python s3s.py || echo "Failed to run s3s.py"
+	python s3s.py -r || echo "Failed to run s3s.py"
 else
 	# Run with arguments
 	python s3s.py "$@" || echo "Failed to run s3s.py"
