@@ -1,0 +1,71 @@
+#!/usr/bin/env sh
+
+# Not allow to run as root.
+if [ $(id -u) -eq 0 ]; then
+	echo "Please do not run s3s as root"
+	exit 1
+fi
+
+# Making sure .config directory exists and cd into it.
+mkdir -p "$HOME/.config"
+cd "$HOME/.config"
+
+# Parse custom options
+token_mode=false
+help=false
+use_xclip=false
+while getopts ':fghux' OPTION; do
+	case "$OPTION" in
+		f)
+			rm -rf "$HOME/.config/s3s" ;;
+		g)
+			token_mode=true ;;
+		h)
+			help=true ;;
+		x)
+			use_xclip=true;;
+	esac
+done
+
+if $use_xclip && ! $token_mode; then
+	echo "Cannot use argument -x without -g"
+	exit 1
+fi
+
+# Look for cloned s3s. If not found, git clone it.
+new=false
+if [ ! -d "s3s" ]; then
+	echo "Installing s3s to \"$HOME/.config/s3s\""
+	git clone https://github.com/frozenpandaman/s3s.git
+	new=true
+fi
+
+cd s3s
+if $token_mode; then
+	# Get gtoken from the config file.
+	token=$(jq '.gtoken' config.txt | tr -d '"')
+	if $use_xclip; then
+		# Copy gtoken to the clipboard using xclip
+		echo $token | xclip -sel clip
+		echo "Copied gtoken to clipboard"
+	else
+		# Output the gtoken
+		echo $token
+	fi
+	exit 0
+elif $new; then
+	pip install -r requirements.txt || echo "Failed to install python modules using requirements.txt"
+	# Do a first run to setup things.
+	python s3s.py || echo "Failed to run s3s.py"
+else
+	# Run with arguments
+	python s3s.py "$@" || echo "Failed to run s3s.py"
+fi
+
+if $help; then
+	# Give our custom options
+	echo -e "\nadditional options added by s3s-setup:"
+	echo -e "  -f\t\tfix the s3s installation by re-installing"
+	echo -e "  -g\t\tprint the gtoken from config.txt"
+	echo -e "  -x\t\tcopy the gtoken to the clipboard instead of printing it"
+fi
