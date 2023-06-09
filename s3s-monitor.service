@@ -2,7 +2,7 @@
 Description=Monitor your Splatoon 3 battles with s3s
 
 [Service]
-ExecStart=sh -c "yes | /usr/bin/s3s -u -M 300 -r"
+ExecStart=sh -c "yes | /usr/bin/s3s -M 300 -r"
 StandardOutput=inherit
 StandardError=inherit
 RuntimeMaxSec=3600s
