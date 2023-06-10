@@ -17,7 +17,10 @@ Arch Linux users can install this script from the AUR. It is named `s3s-setup`.
 
 For other Linux users, you can install this manually.
 ### Prerequisites
-- Python 3
+Install these with your package manager
+- python
+- jq
+- xclip (optional, for copying gtoken to clipboard)
 
 ### Instructions
 1. Clone this repo using `git clone https://github.com/North-West-Wind/s3s-setup` or download it as a ZIP and extract it.
