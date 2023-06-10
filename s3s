@@ -23,7 +23,8 @@ while getopts ':fghux' OPTION; do
 		h)
 			help=true ;;
 		x)
-			use_xclip=true;;
+			if ! command -v xclip &> /dev/null; then echo "xclip is not found. Ignoring -x flag..."
+			else use_xclip=true;; fi
 	esac
 done
 
