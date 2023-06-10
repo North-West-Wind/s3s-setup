@@ -9,7 +9,7 @@ This script adds an extra function for copying the `gtoken` for browsing SplatNe
 $ s3s [-g] [-x] [-f]
 ```
 The `-g` flag prints the `gtoken` from `config.txt` to the console.  
-The `-x` flag must be used with the `-g` flag. It uses `xclip` to copy the `gtoken` to clipboard instead of printing it on screen.  
+The `-x` flag can only be used with the `-g` flag. It uses `xclip` to copy the `gtoken` to clipboard instead of printing it on screen.  
 The `-f` flag has no relationship with `gtoken`. It should only be used if the installation of `s3s` is messed up. The path of installation is `~/.config/s3s/`.
 
 ## Install
