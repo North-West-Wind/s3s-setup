@@ -1,5 +1,5 @@
 # s3s-setup
-Setup and helper script for [splatnet3statink (s3s)](https://github.com/frozenpandaman/s3s) by frozenpandaman.
+Setup and helper script for [s3s](https://github.com/frozenpandaman/s3s) by frozenpandaman.
 
 ## Usage
 Refer to [s3s](https://github.com/frozenpandaman/s3s#usage-) for normal s3s usage.
