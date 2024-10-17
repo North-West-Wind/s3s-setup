@@ -11,9 +11,10 @@ mkdir -p "$HOME/.config"
 cd "$HOME/.config"
 
 # Parse custom options
-token_mode=false
-help=false
-use_xclip=false
+token_mode=
+help=
+use_xclip=
+update=
 while getopts ':fghux' OPTION; do
 	case "$OPTION" in
 		f)
@@ -29,6 +30,8 @@ while getopts ':fghux' OPTION; do
 				use_xclip=true
 			fi
 			;;
+		u)
+			update=true
 	esac
 done
 
@@ -38,7 +41,7 @@ if $use_xclip && ! $token_mode; then
 fi
 
 # Look for cloned s3s. If not found, git clone it.
-new=false
+new=
 if [ ! -d "s3s" ]; then
 	echo "Installing s3s to \"$HOME/.config/s3s\""
 	git clone https://github.com/frozenpandaman/s3s.git
@@ -62,6 +65,9 @@ elif $new; then
 	pip install -r requirements.txt || echo "Failed to install python modules using requirements.txt"
 	# Do a first run to setup things.
 	python s3s.py -r || echo "Failed to run s3s.py"
+elif $update; then
+	# Update by git pull
+	git pull
 else
 	# Run with arguments
 	python s3s.py "$@" || echo "Failed to run s3s.py"
@@ -73,4 +79,5 @@ if $help; then
 	echo -e "  -f\t\tfix the s3s installation by re-installing"
 	echo -e "  -g\t\tprint the gtoken from config.txt"
 	echo -e "  -x\t\tcopy the gtoken to the clipboard instead of printing it"
+	echo -e "  -u\t\tupdate the s3s installation"
 fi
